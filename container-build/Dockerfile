@@ -8,7 +8,7 @@ LABEL io.k8s.description="Basic Apache Http child image" \
       io.openshift.expose-service="8080:http" \
       io.openshift.tags="apache, http"
 
-RUN sed -i "s/listen 80/listen 8080/g" /etc/httpd/conf/httpd.conf
+RUN sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf
 
 RUN chgrp -R 0 /var/run/httpd /var/log/httpd && \
     chmod -R g=u /var/run/httpd /var/log/httpd
