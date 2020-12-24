@@ -1,0 +1,1000 @@
+  246  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A30 Parameters
+  247  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A50 Parameters
+  248  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A200 Parameters
+  249  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p Name=quotesapi \
+  250  oc projects
+  251  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  252  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY_URL=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  253  oc new-app --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY_URL=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  254  oc status
+  255  oc get pods
+  256  oc logs bc/quotesapi
+  257  oc get pods
+  258  oc get all
+  259  oc get route
+  260  curl -si quote-jairof-us.apps.na45.prod.nextcle.com/get.php
+  261  oc get svc
+  262  oc describe svc quotesdb | grep Endpoint
+  263  oc describe pod quotesdb | grep IP
+  264  oc get pods
+  265  oc descrive svc quotesdb | grep Endpoint
+  266  oc describe svc quotesdb | grep Endpoint
+  267  oc describe pod quotesdb-1-jdxw8 | grep IP
+  268  oc describe pod quotesapi-1-9n27h | grep Environment
+  269  oc describe pod quotesapi-1-9n27h | grep -A20 Environment
+  270  oc describe pod quotesdb-1-jdxw8 | grep Environment -A10
+  271  oc rsh quotesapi-1-9n27h bash -c 'echo > /dev/tcp/${DATABASE_SERVICE_NAME}/3306'
+  272  oc rsh quotesapi-1-9n27h bash -c 'echo > /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK || echo FAIL'
+  273  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK || echo FAIL'
+  274  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306'
+  275  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK'
+  276  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3307 && echo OK'
+  277  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3307 && echo OK || echo FAIL'
+  278  oc get pods
+  279  oc logs quotesapi-19n27h
+  280  oc logs quotesapi-1-9n27h
+  281  ls ~/DO288/labs/build-template
+  282  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/temp/quotes.sql
+  283  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/tmp/quotes.sql
+  284  oc ls quotesdb-1-jdxw8:/tmp
+  285  oc rsh -it quotesdb-1-jdxw8 /bin/bash
+  286  oc rsh -t quotesdb-1-jdxw8 /bin/bash
+  287  oc cp ~/DO288/labs/build-tempate/quote.sql quotesdb-1-jdxw8:/tmp/quote.sql
+  288  oc rsh -t quotesdb-1-jdxw8
+  289  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/tmp/quote.sql
+  290  oc rsh -t quotesdb-1-jdxw8
+  291  oc get route
+  292  curl -si quote-jairof-us.apps.na45.prod.nextcle.com/get.php
+  293  oc rsh quotesdb-1-jdxw8 /bin/bash -c 'ls /tmp'
+  294  oc rsh quotesdb-1-jdxw8 /bin/bash
+  295  oc projects
+  296  oc delete project jairof-us-common
+  297  oc delete project jairof-us-build-template
+  298  ls
+  299  ls nodejs-hello-world
+  300  ls nodejs-helloworld
+  301  git checkout master
+  302  git branches
+  303  git branches |grep source-build
+  304  git checkout -b source-build2
+  305  git push -u origin source-build2
+  306  ls nodejs-helloworld
+  307  oc new-project jairof-us-source-build
+  308  ls ~/DO288/labs
+  309  ls ~/DO288/labs/souce-build
+  310  ls ~/DO288/labs/source-build
+  311  oc new-app --as-deployment-config --name greet -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld --dry-run
+  312  oc new-app --as-deployment-config --name greet --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld --dry-run
+  313  oc get pods
+  314  oc new-app --as-deployment-config --name greet --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld
+  315  oc status
+  316  oc get pods
+  317  oc logs bc/greet
+  318  oc logs bc/greet -f
+  319  history | grep echo OK
+  320  cd DO288
+  321  ls
+  322  ls labs
+  323  ls ~/DO288-apps
+  324  ls ~/DO288-apps/ubi-echo
+  325  cat ~/DO288-apps/ubi-echo/Dockerfile
+  326  ls labs
+  327  ls quotes
+  328  ls labs/quotes
+  329  ls labs/build-template
+  330  vim labs/build-template/php-mysql-ephemeral.json
+  331  ls labs/source-build
+  332  cat labs/source-build/oc-new-app.sh
+  333  ls ~/DO288-apps/
+  334  ls ~/DO288-apps/nodejs-helloworld
+  335  python -m json.tool ~/DO288-apps/nodejs-helloworld
+  336  python -m json.tool ~/DO288-apps/nodejs-helloworld/package.json
+  337  vim ~/DO288-apps/nodejs-helloworld/package.json
+  338  ls lab http*
+  339  ls labs http*
+  340  ls labs/http*
+  341  ls labs | grep http
+  342  ls labs/container-build
+  343  ls labs/container-build/httpd-parent
+  344  cat labs/container-build/http-parent/Dockerfile
+  345  cat labs/container-build/httpd-parent/Dockerfile
+  346  cat solutions/container-build/Dockerfile
+  347  ls labs
+  348  ls labs/build-template
+  349  vim labs/build-template/php-mysql-ephemeral.json
+  350  source /usr/local/etc/ocp4.config
+  351  ls DO288-apps
+  352  git status
+  353  cd DO288-apps
+  354  git status
+  355  git branches
+  356  git branches | grep docker-build
+  357  git checkout master
+  358  git checkout -b docker-build2
+  359  git push -u origin docker-build2
+  360  history
+  361  history -h
+  362  history -d 800
+  363  history
+  364  ls
+  365  cat ubi-echo
+  366  ls ubi-echo
+  367  cat ubi-echo/Dockerfile
+  368  oc login -u ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  369  oc login -u jairof-us -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  370  oc delete project jairof-us-movies-stage
+  371  oc delete project jairof-us-movies-dev
+  372  oc delete project jairof-us-jenkins
+  373  oc new-project jairof-us-docker-build2
+  374  git branch
+  375  oc project
+  376  oc new-app --dry-run --as-deployment-config --name echo https://github.com/jairof002/DO288-apps#docker-build2 --context-dir ubi-echo
+  377  oc new-app --dry-run --as-deployment-config --name echo --strategy docker https://github.com/jairof002/DO288-apps#docker-build2 --context-dir ubi-echo
+  378  oc new-app --as-deployment-config --name echo --strategy docker https://github.com/jairof002/DO288-apps#docker-build2 --context-dir ubi-echo
+  379  oc status
+  380  oc get pods
+  381  oc logs bc/echo
+  382  oc get pods
+  383  oc logs echo-1-scmwn
+  384  oc describe bc echo
+  385  oc get pods
+  386  oc get is
+  387  oc describe is echo
+  388  oc get projects
+  389  oc get all
+  390  oc delete all -l app=echo
+  391  oc projects
+  392  oc delete project jairof-us-docker-build2
+  393  oc get route console -n openshift-console
+  394  echo $RHT_OCP4_MASTER_API
+  395  echo $RHT_OCP4_WILDCARD_DOMAIN
+  396  oc get all
+  397  oc projexts
+  398  oc projects
+  399  git checkout master
+  400  ls
+  401  ls quotes
+  402  oc get templates -n openshift | grep php
+  403  oc new-project jairof-us-common
+  404  ls ~/DO288/labs/build-template
+  405  oc create -f php-mysql-ephemeral.json
+  406  oc create -f ~/DO288/labs/build-template/php-mysql-ephemeral.json
+  407  oc get template
+  408  oc describe template php-mysql-ephemeral
+  409  oc process --parameters php-mysql-ephemeral
+  410  oc new-project jairof-us-build-template
+  411  oc projects
+  412  oc describe template php-mysql-ephemeral | grep parameters
+  413  oc describe template jairof-us-common/php-mysql-ephemeral | grep parameters
+  414  oc describe jairof-us-common/php-mysql-ephemeral | grep parameters
+  415  oc describe php-mysql-ephemeral -n jairof-us-common | grep parameters
+  416  oc describe template php-mysql-ephemeral -n jairof-us-common | grep parameters
+  417  oc describe template php-mysql-ephemeral -n jairof-us-common | grep Parameters
+  418  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A10Parameters
+  419  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A10 Parameters
+  420  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A20 Parameters
+  421  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A30 Parameters
+  422  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A50 Parameters
+  423  oc describe template php-mysql-ephemeral -n jairof-us-common | grep -A200 Parameters
+  424  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p Name=quotesapi \
+  425  oc projects
+  426  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  427  oc new-app --dry-run --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY_URL=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  428  oc new-app --as-deployment-config --template jairof-us-common/php-mysql-ephemeral -p NAME=quotesapi -p APPLICATION_DOMAIN=quote-jairof-us.${RHT_OCP4_WILDCARD_DOMAIN} -p SOURCE_REPOSITORY_URL=http://github.com/jairof002/DO288-apps -p CONTEXT_DIR=quotes -p DATABASE_SERVICE_NAME=quotesdb -p DATABASE_USER=user1 -p DATABASE_PASSWORD=mypa55 --name quotes
+  429  oc status
+  430  oc get pods
+  431  oc logs bc/quotesapi
+  432  oc get pods
+  433  oc get all
+  434  oc get route
+  435  curl -si quote-jairof-us.apps.na45.prod.nextcle.com/get.php
+  436  oc get svc
+  437  oc describe svc quotesdb | grep Endpoint
+  438  oc describe pod quotesdb | grep IP
+  439  oc get pods
+  440  oc descrive svc quotesdb | grep Endpoint
+  441  oc describe svc quotesdb | grep Endpoint
+  442  oc describe pod quotesdb-1-jdxw8 | grep IP
+  443  oc describe pod quotesapi-1-9n27h | grep Environment
+  444  oc describe pod quotesapi-1-9n27h | grep -A20 Environment
+  445  oc describe pod quotesdb-1-jdxw8 | grep Environment -A10
+  446  oc rsh quotesapi-1-9n27h bash -c 'echo > /dev/tcp/${DATABASE_SERVICE_NAME}/3306'
+  447  oc rsh quotesapi-1-9n27h bash -c 'echo > /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK || echo FAIL'
+  448  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK || echo FAIL'
+  449  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306'
+  450  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3306 && echo OK'
+  451  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3307 && echo OK'
+  452  oc rsh quotesapi-1-9n27h bash -c 'echo /dev/tcp/${DATABASE_SERVICE_NAME}/3307 && echo OK || echo FAIL'
+  453  oc get pods
+  454  oc logs quotesapi-19n27h
+  455  oc logs quotesapi-1-9n27h
+  456  ls ~/DO288/labs/build-template
+  457  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/temp/quotes.sql
+  458  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/tmp/quotes.sql
+  459  oc ls quotesdb-1-jdxw8:/tmp
+  460  oc rsh -it quotesdb-1-jdxw8 /bin/bash
+  461  oc rsh -t quotesdb-1-jdxw8 /bin/bash
+  462  oc cp ~/DO288/labs/build-tempate/quote.sql quotesdb-1-jdxw8:/tmp/quote.sql
+  463  oc rsh -t quotesdb-1-jdxw8
+  464  oc cp ~/DO288/labs/build-template/quote.sql quotesdb-1-jdxw8:/tmp/quote.sql
+  465  oc rsh -t quotesdb-1-jdxw8
+  466  oc get route
+  467  curl -si quote-jairof-us.apps.na45.prod.nextcle.com/get.php
+  468  oc rsh quotesdb-1-jdxw8 /bin/bash -c 'ls /tmp'
+  469  oc rsh quotesdb-1-jdxw8 /bin/bash
+  470  oc projects
+  471  oc delete project jairof-us-common
+  472  oc delete project jairof-us-build-template
+  473  ls
+  474  ls nodejs-hello-world
+  475  ls nodejs-helloworld
+  476  git checkout master
+  477  git branches
+  478  git branches |grep source-build
+  479  git checkout -b source-build2
+  480  git push -u origin source-build2
+  481  ls nodejs-helloworld
+  482  oc new-project jairof-us-source-build
+  483  ls ~/DO288/labs
+  484  ls ~/DO288/labs/souce-build
+  485  ls ~/DO288/labs/source-build
+  486  oc new-app --as-deployment-config --name greet -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld --dry-run
+  487  oc new-app --as-deployment-config --name greet --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld --dry-run
+  488  oc get pods
+  489  oc new-app --as-deployment-config --name greet --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs -i nodejs:12 http://github.com/jairof002/DO288-apps#source-build2 --context-dir nodejs-helloworld
+  490  oc status
+  491  oc get pods
+  492  oc logs bc/greet
+  493  oc logs bc/greet -f
+  494  history | grep echo OK
+  495  history | grep OK
+  496  history | grep echo OK
+  497  history | grep 'echo OK'
+  498  oc get pods
+  499  oc logs bc/greet
+  500  oc start-build bc/greet
+  501  oc get pods
+  502  oc logs bc/greet -f
+  503  git branch
+  504  git -a -m "package.json"
+  505  git commit -a -m "package.json"
+  506  git push
+  507  oc get pods
+  508  oc start-build bc/greet
+  509  oc get pods
+  510  oc logs bc/greet -f
+  511  oc get pods
+  512  oc get all
+  513  oc expose svc greet
+  514  oc get route
+  515  curl -si greet-jairof-us-source-build.apps.na45.prod.nextcle.com
+  516  history | grep 'echo OK'
+  517  oc projects
+  518  oc delete project jairof-us-source-build
+  519  ls 
+  520  ls http
+  521  ls http*
+  522  git checkout master
+  523  git branches | grep container-build
+  524  git checkout -b container-build3
+  525  git push -u origin container-build3
+  526  ls 
+  527  ls container-build
+  528  cat container-build/Dockerfile
+  529  ls container-build/Dockerfile/src
+  530  ls container-build/src
+  531  cat container-build/src/index.html
+  532  oc projects
+  533  oc new-project jairof-us-container-build
+  534  ls
+  535  git branch
+  536  oc new-app --as-deployment-config --name hola https://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build --dry-run
+  537  oc new-app --as-deployment-config --name hola https://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build
+  538  oc get pods
+  539  oc logs bc/hola -f
+  540  oc get pods
+  541  oc logs hola-1-x9jdv
+  542  oc describe pod hola-1-x9jdv
+  543  oc logs hola-1-x9jdv
+  544  oc delete all -l app=hola
+  545  oc get all
+  546  ls container-build
+  547  cat container-build/Dockerfile
+  548  vim container-build/Dockerfile
+  549  cat container-build/Dockerfile
+  550  git commmit -a -m "dockerfile"
+  551  git commit -a -m "dockerfile"
+  552  git push
+  553  oc new-app --as-deployment-config --name hola http://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build --dry-run
+  554  git branch
+  555  ls
+  556  oc new-app --as-deployment-config --name hola http://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build
+  557  oc get pods
+  558  oc logs bc/hola -f
+  559  oc get pods
+  560  oc logs hola-1-mm9kv
+  561  vim container-build/Dockerfile
+  562  git commit -a -m "dockerfile 2"
+  563  git push
+  564  oc new-app --as-deployment-config --name hola https://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build --dry-run
+  565  oc new-app --as-deployment-config --name hola https://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build
+  566  oc delete all -l app=hola
+  567  oc new-app --as-deployment-config --name hola https://github.com/jairof002/DO288-apps#container-build3 --context-dir container-build
+  568  oc get pods
+  569  oc get pods -w
+  570  oc get pods
+  571  oc get route
+  572  oc expose svc hola
+  573  oc get route
+  574  curl -si hola-jairof-us-container-build.apps.na45.prod.nextcle.com
+  575  ls ubi-echo
+  576  ls quotes
+  577  cd DO288
+  578  ls
+  579  ls labs/app-config
+  580  ls ~/DO288-apps/app-config
+  581  cat ~/DO288-apps/app-config/app.js
+  582  ls ~/DO288/hello-java
+  583  ls ~/DO288-apps/hello-java
+  584  vim ~/DO288-apps/hello-java/Dockerfile
+  585  ls labs/external-registry
+  586  ls labs/external-registry/ubi-sleep
+  587  oc create configmap --help
+  588  oc create secret
+  589  oc create secret --help
+  590  oc create secret generic --help
+  591  oc set env --help
+  592  oc set volume
+  593  oc set volume --help
+  594  oc set volume -t secret --help
+  595  podman run --help
+  596  ls
+  597  cd DO288-aps
+  598  ls
+  599  cd DO288-apps
+  600  ls
+  601  source /usr/local/etc/ocp4.config
+  602  git branch
+  603  git checktout masteer
+  604  git checktout master
+  605  git checkout master
+  606  ls app-config
+  607  vim app-config/app.js
+  608  git branches | app-config
+  609  git branches | grep app-config
+  610  git checkout -b app-config3
+  611  git push -u origin app-config3
+  612  oc new-project jairof-us-app-config
+  613  oc login -u jairof-us -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  614  oc new-project jairof-us-app-config
+  615  oc new-app --as-deployment-config --name myapp --build-env npm_confi_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~https://github.com/jairof002/DO288-apps#app-config3 --context-dir app-config --dry-run
+  616  oc new-app --as-deployment-config --name myapp --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~https://github.com/jairof002/DO288-apps#app-config3 --context-dir app-config --dry-run
+  617  oc new-app --as-deployment-config --name myapp --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~https://github.com/jairof002/DO288-apps#app-config3 --context-dir app-config
+  618  oc get pods
+  619  oc logs bc/myapp
+  620  oc logs bc/myapp -f
+  621  oc get pods
+  622  oc expose svc myapp
+  623  oc get route
+  624  curl -si myapp-jairof-us-app-config.apps.na45.prod.nextcle.com
+  625  oc create configmap --help
+  626  oc create configmap myappconf --from-literal APP_MSG="My Test MSG" --dry-run
+  627  oc create configmap myappconf --from-literal APP_MSG="My Test MSG" --dry-run=client
+  628  oc create configmap myappconf --from-literal APP_MSG="My Test MSG"
+  629  oc describe cm/myappconfig
+  630  oc describe cm/myappconf
+  631  ls app-config
+  632  cat app-config/myapp.sec
+  633  oc create secret generic myappfilesec --from-file ~/DO288-apps/app-config/myapp.sec --dry-run=client
+  634  oc create secret generic myappfilesec --from-file ~/DO288-apps/app-config/myapp.sec
+  635  oc describe secret/myappfilesec
+  636  oc get secret myappfilesec -o json
+  637  oc get dc
+  638  oc set env --from configmap/myappconf dc/myapp --dry-run=client
+  639  oc set env --from configma/myappconf dc/myapp --dry-run=client
+  640  oc set --from configmap/myappconf dc/myapp --dry-run=client
+  641  oc set env --from configmap/myappconf dc/myapp
+  642  oc describe dc/myapp
+  643  oc set volume dc/myapp -t secret --add --mount-path /opt/app-root/secure --secret-name myappfilesec --dry-run=client
+  644  oc set volume dc/myapp -t secret --add --mount-path /opt/app-root/secure --name vol1 --secret-name myappfilesec --dry-run=client
+  645  oc set volume dc/myapp -t secret --add --mount-path /opt/app-root/secure --name myappsec-vol --secret-name myappfilesec
+  646  oc describe dc/myapp
+  647  oc get pods
+  648  oc get route
+  649  curl -si myapp-jairof-us-app-config.apps.na45.prod.nextcle.com
+  650  oc rsh myapp-3-nl982 env
+  651  oc rsh myapp-3-nl982 env | APP
+  652  oc rsh myapp-3-nl982 env | grep APP
+  653  oc rsh myapp-3-nl982 ls /opt/app-root/secure
+  654  oc rsh myapp-3-nl982 cat /opt/app-root/secure/myapp.sec
+  655  oc edit cm/myappconf
+  656  oc get pods
+  657  oc describe cm/myappconf
+  658  oc get route
+  659  curl -si myapp-jairof-us-app-config.apps.na45.prod.nextcle.com
+  660  oc rollout latest dc/myapp
+  661  oc get pods
+  662  history[10]
+  663  history 10
+  664  curl -si myapp-jairof-us-app-config.apps.na45.prod.nextcle.com
+  665  history | tail -n 10
+  666  oc get pods
+  667  oc projects
+  668  oc delete project jairof-us-app-config
+  669  oc delete project jairof-us-container-build
+  670  oc new-project jairof-us-design-container
+  671  oc projects
+  672  oc get all
+  673  oc project jairof-us-design-container
+  674  oc get all
+  675  git branches | grep design
+  676  git checkout master
+  677  git checkout -b design-container3
+  678  git push -u origin design-container3
+  679  git branch
+  680  ls hello-java
+  681  ls hello-java/app-src
+  682  cat hello-java/Dockerfile
+  683  ls hello-java
+  684  ls hello-java/app-src
+  685  tree hello-java
+  686  cat hello-java/app-src/src/main/java/com/redhat/training/openshift/hello/HelloResource.java
+  687  cat hello-java/app-src/src/main/java/com/redhat/training/openshift/hello/JaxRsActivator.java
+  688  oc new-app --as-deployment-config --name elvis https://github.com/jairof002/DO288-apps#design-container3 --context-dir hello-java --dry-run=client
+  689  oc new-app --help
+  690  oc new-app --as-deployment-config --name elvis https://github.com/jairof002/DO288-apps#design-container3 --context-dir hello-java --dry-run
+  691  oc new-app --as-deployment-config --name elvis https://github.com/jairof002/DO288-apps#design-container3 --context-dir hello-java
+  692  oc get pods
+  693  oc logs bc/elvis -f
+  694  oc get pods
+  695  oc logs dc/elvis
+  696  oc delete all -l app=elvis
+  697  oc new-app --as-deployment-config --name elvis https://github.com/jairof002/DO288-apps#design-container3 --context-dir hello-java
+  698  oc get pods -w
+  699  oc get pods
+  700  oc get is
+  701  oc logs dc/elvis
+  702  oc logs elvis-1-deploy
+  703  oc logs elvis-1-dcnmn
+  704  git commit -a -m "Dockerfile"
+  705  git push
+  706  oc start-build bc/elvis
+  707  oc get pods
+  708  oc expose svc elvis
+  709  oc get route
+  710  curl -si elvis-jairof-us-design-container.apps.na45.prod.nextcle.com/api/hello
+  711  oc create configmap appconfig --from-literal APP_MSG=Elvis is dead --dry-run
+  712  oc create configmap appconfig --from-literal APP_MSG="Elvis is dead" --dry-run
+  713  oc create configmap appconfig --from-literal APP_MSG="Elvis is dead" --dry-run=client
+  714  oc create configmap appconfig --from-literal APP_MSG="Elvis is dead"
+  715  oc get cm
+  716  oc describe cm/appconfig
+  717  oc describe dc/elvis
+  718  oc new-app --help
+  719  oc get is
+  720  oc describe is elvis
+  721  read -p test -s testenv
+  722  echo $testenv
+  723  read -p "test: " -s testenv
+  724  echo testenv
+  725  echo $testenv
+  726  ls external-registry
+  727  podman login quay.io
+  728  skopeo --help
+  729  skopeo copy oci:/home/DO288/labs/external-registry/ubi-sleep docker://quay.io/jairof002/ubi-sleep:1.0
+  730  skopeo copy oci:~/DO288/labs/external-registry/ubi-sleep docker://quay.io/jairof002/ubi-sleep:1.0
+  731  skopeo copy oci:/home/student/DO288/labs/external-registry/ubi-sleep docker://quay.io/jairof002/ubi-sleep:1.0
+  732  podman search --help
+  733  podman search quay.io/jairof002/ubi-sleep
+  734  podman search ubi-sleep
+  735  podman search quay.io ubi-sleep
+  736  podman search quay.io/ubi-sleep
+  737  skopeo inspect quay.io/jairof002/ubi-sleep
+  738  skopeo inspect docker://quay.io/jairof002/ubi-sleep
+  739  skopeo inspect docker://quay.io/jairof002/ubi-sleep:1.0
+  740  sudo podman login quay.io
+  741  sudo podman --help
+  742  sudo podman run -d --name sleep quay.io/jairof002/ubi-sleep
+  743  sudo podman run -d --name sleep quay.io/jairof002/ubi-sleep:1.0
+  744  podman images
+  745  sudo podman images
+  746  sudo podman ps
+  747  sudo podman logs sleep
+  748  sudo podman images
+  749  sudo podman ps
+  750  sudo podman stop sleep
+  751  sudo podman ps
+  752  sudo podman ps -a
+  753  sudo podman rm sleep
+  754  sudo podman ps -a
+  755  sudo podman images
+  756  sudo podman rmi sleep
+  757  sudo podman images
+  758  oc new-app --as-deployment-config --help
+  759  oc new-app --as-deployment-config --name sleep --docker-image://quay.io/jairof002/ubi-sleep --dry-run
+  760  oc new-app --as-deployment-config --name sleep --docker-image quay.io/jairof002/ubi-sleep --dry-run
+  761  oc new-app --as-deployment-config --name sleep --docker-image quay.io/jairof002/ubi-sleep:1.0 --dry-run
+  762  oc new-app --as-deployment-config --name sleep --docker-image=quay.io/jairof002/ubi-sleep:1.0 --dry-run
+  763  history 10
+  764  history 20
+  765  history 50 | grep podman
+  766  oc create secret generic quay.io --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  767  oc create secret generic quay.io --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
+  768  oc get secret quayio
+  769  oc get secret quay.io
+  770  oc describe secret quay.io
+  771  oc secrets link default quay.io --form pull --dry-run
+  772  oc secrets link default quay.io --for pull --dry-run
+  773  oc secrets link --help
+  774  oc secrets link default quay.io --for pull
+  775  oc new-app --as-deployment-config --name sleep --docker-image:quay.io/jairof002/ubi-sleep --dry-run
+  776  oc new-app --as-deployment-config --name sleep --docker-image quay.io/jairof002/ubi-sleep --dry-run
+  777  oc new-app --as-deployment-config --name sleep --docker-image quay.io/jairof002/ubi-sleep:1.0 --dry-run
+  778  oc new-app --as-deployment-config --name sleep --docker-image quay.io/jairof002/ubi-sleep:1.0
+  779  oc get pods
+  780  oc expose svc sleep
+  781  oc get all -l app=sleep
+  782  oc projects
+  783  oc get pods
+  784  oc delete project jairof-us-design-container
+  785  oc get projects
+  786  podman ps
+  787  sudo podman ps
+  788  podman images
+  789  sudo podman images
+  790  sudo skopeo delete docker://quay.io/jairof/002/ubi-sleep
+  791  sudo skopeo delete docker://quay.io/jairof/002/ubi-sleep:1.0
+  792  sudo skopeo delete docker:quay.io/jairof/002/ubi-sleep:1.0
+  793  sudo skopeo delete docker://quay.io/jairof002/ubi-sleep:1.0
+  794  cd DO288
+  795  ls
+  796  ls labs
+  797  ls labs
+  798  ls labs/ubi-info
+  799  ls labs/expose-registry/ubi-info
+  800  ls expose-image
+  801  ls labs/expose-image
+  802  ls labs/expose-image/php-info
+  803  ls labs/external-registry/
+  804  ls labs/external-registry/ubi-sleep
+  805  ls labs
+  806  ls labs/manage-builds
+  807  cd DO288-apps
+  808  ls
+  809  source /usr/local/etc/ocp4.config
+  810  oc login -u jairof-us -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  811  oc projects
+  812  ls ubi-info
+  813  cat ubi-info/Dockerfile
+  814  cat ubi-info/info.sh
+  815  oc get route registry -n openshift-registry
+  816  oc get route default -n openshift-registry
+  817  oc get all | registry
+  818  oc get all | grep registry
+  819  oc get route --help
+  820  oc namespaces
+  821  oc get --all-namespaces
+  822  oc get --all-namespaces registry
+  823  oc get route -n openshift-image-registry
+  824  oc new-project jairof-us-common
+  825  ls
+  826  ls ubi-info
+  827  lab expose-registry start
+  828  oc project
+  829  TOKEN=$(oc whoami -t)
+  830  echo $TOKEN
+  831  oc get is
+  832  oc get route -n openshift-image-registry
+  833  skopeo copy oci:~/DO288/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info
+  834  skopeo copy oci:/home/student/DO288/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info
+  835  skopeo copy oci:~/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info
+  836  skopeo copy oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info
+  837  skopeo copy oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info --help
+  838  skopeo copy oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info --dest-creds ${TOKEN} 
+  839  skopeo copy oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info --dest-creds jairof-us:${TOKEN} 
+  840  skopeo copy oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info --dest-creds=jairof-us:${TOKEN}
+  841  echo $TOKEN
+  842  skopeo copy --dest-creds jairof-us:${TOKEN} oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/ubi-info
+  843  skopeo copy --dest-creds jairof-us:${TOKEN} oci:/home/student/DO288/labs/expose-registry/ubi-info docker://default-route-openshift-image-registry.apps.na45.prod.nextcle.com/jairof-us-common/ubi-info
+  844  oc get is
+  845  oc tag --help
+  846  oc tag ubi-info ubi-info:1.0
+  847  og get is
+  848  oc get is
+  849  sudo podman login -u jairof-us -p ${TOKEN} default-route-openshift-image-registry.apps.na45.prod.nextcle.com/jairof-us-common/ubi-info
+  850  sudo podman login -u jairof-us -p ${TOKEN} default-route-openshift-image-registry.apps.na45.prod.nextcle.com
+  851  sudo podman search --help
+  852  sudo podman search ubi-info
+  853  sudo podman pull default-route-openshift-image-registry.apps.na45.prod.nextcle.com/jairof-us-common/ubi-info
+  854  sudo podman images
+  855  sudo podman run jairof-us-common/ubi-info
+  856  oc projects
+  857  sudo podman ps
+  858  oc get all
+  859  sudo podman ps
+  860  sudo podman ps -a
+  861  history | grep podman run
+  862  history | grep "podman run"
+  863  oc get is
+  864  oc delete is ubi-info
+  865  oc get is
+  866  sudo podman images
+  867  podman rm ubi-info
+  868  podman rmi ubi-info
+  869  podman rmi jairof-us-common/ubi-info
+  870  sudo podman rmi jairof-us-common/ubi-info
+  871  sudo podman ps
+  872  sudo podman ps -a
+  873  sudo podman rm vigilant_franklin
+  874  sudo podman rmi ubi-info
+  875  sudo podman images
+  876  sudo podman rmi ubi-sleep
+  877  sudo podman rmi ubi-sleep:1.0
+  878  oc delete project jairof-us-common
+  879  oc get is -n openshift -o name
+  880  oc get is -n openshift -o id
+  881  oc get is -n openshift -o ID
+  882  oc get istag -n openshift | grep php
+  883  oc describe is php -n openshift
+  884  oc describe istag php -n openshift
+  885  oc describe istag php:latest -n openshift
+  886  oc describe is php -n openshift
+  887  oc projects
+  888  oc new-project jairof-us-common
+  889  skopeo inspect docker://quay.io/redhattraingin/hello-world-nginx
+  890  skopeo inspect docker://quay.io/redhattraining/hello-world-nginx
+  891  oc import-image quay.io/redhattraining/hello-world-nginx
+  892  oc import-image --help
+  893  oc import-image --from quay.io/redhattraining/hello-world-nginx --confirm --dry-run
+  894  oc import-image --from quay.io/redhattraining/hello-world-nginx:latest --confirm --dry-run
+  895  oc import-image --from docker://quay.io/redhattraining/hello-world-nginx:latest --confirm --dry-run
+  896  oc import-image --from docker://quay.io/redhattraining/hello-world-nginx --confirm --dry-run --help
+  897  oc import-image hello-world --from docker://quay.io/redhattraining/hello-world-nginx --confirm --dry-run --help
+  898  oc import-image hello-world --from docker://quay.io/redhattraining/hello-world-nginx --confirm --dry-run
+  899  oc import-image hello-world --from quay.io/redhattraining/hello-world-nginx --confirm --dry-run
+  900  oc import-image hello-world --from quay.io/redhattraining/hello-world-nginx --confirm --help
+  901  oc import-image hello-world --from quay.io/redhattraining/hello-world-nginx --confirm
+  902  oc get is
+  903  oc get istag
+  904  oc describe is hello-world
+  905  oc new-project jairof-us-image-stream
+  906  oc new-app --as-deployment-config --name hello -i jairof-us-common/hello-world-nginx --dry-run
+  907  oc project
+  908  oc projects
+  909  oc get is -n jairof-us-common
+  910  oc new-app --as-deployment-config --name hello -i jairof-us-common/hello-world --dry-run
+  911  oc get pods
+  912  oc new-app --as-deployment-config --name hello -i jairof-us-common/hello-world
+  913  oc get pods
+  914  oc expose svc hello
+  915  oc get route
+  916  curl -si hello-jairof-us-image-stream.apps.na45.prod.nextcle.com
+  917  oc delete project jairof-us-image-stream
+  918  oc delete project jairof-us-common
+  919  ls php-info
+  920  ls
+  921  oc podman login quay.io
+  922  podman login quay.io
+  923  skopeo copy ~/DO288/labs/expose-image/php-info docker://quay.io/jairof002/php-info --help
+  924  skopeo copy ~/DO288/labs/expose-image/php-info docker://quay.io/jairof002/php-info
+  925  skopeo copy oci:~/DO288/labs/expose-image/php-info docker://quay.io/jairof002/php-info
+  926  skopeo copy oci:/home/student/DO288/labs/expose-image/php-info docker://quay.io/jairof002/php-info
+  927  oc projects
+  928  oc new-project jairof-us-common
+  929  oc create secret generic quayio --from-file .dockerconfigjson/${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  930  oc create secret generic quayio --from-file .dockerconfigjson.${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  931  oc create secret generic quayio --from-file .dockerconfigjson ${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  932  oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  933  oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
+  934  oc get secret
+  935  oc import image --help
+  936  oc import-image --help
+  937  oc import-image php-info --from quay.io/jairof002/php-info --reference-policy local --confirm --dry-run
+  938  oc get secret
+  939  oc delete secret quayio
+  940  oc get secret
+  941  oc import-image php-info --from quay.io/jairof002/php-info --reference-policy local --confirm --dry-run
+  942  oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson --dry-run
+  943  oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
+  944  oc get is
+  945  oc import-image php-info --from quay.io/jairof002/php-info --reference-policy local --confirm
+  946  oc get is
+  947  oc create project jairof-us-expose-image
+  948  oc new-project jairof-us-expose-image
+  949  oc policy add-role-to-group system:serviceaccounts:image-puller system:serviceaccounts:jairof-us-expose-image --help
+  950  oc policy add-role-to-group system:serviceaccounts:image-puller system:serviceaccounts:jairof-us-expose-image --dry-run=client
+  951  oc policy add-role-to-group -n jairof-us-common system:serviceaccounts:image-puller system:serviceaccounts:jairof-us-expose-image --dry-run=client
+  952  oc policy add-role-to-group -n jairof-us-common system:serviceaccounts:image-puller system:serviceaccounts:jairof-us-expose-image --dry-run=server
+  953  oc policy add-role-to-group -n jairof-us-common system:serviceaccount:image-puller system:serviceaccounts:jairof-us-expose-image --dry-run=server
+  954  oc policy add-role-to-group -n jairof-us-common system:image-puller system:serviceaccounts:jairof-us-expose-image --dry-run=server
+  955  oc policy add-role-to-group -n jairof-us-common system:image-puller system:serviceaccounts:jairof-us-expose-image
+  956  oc new-app --as-deployment-config --name info -i jairof-us-common/php-info --help
+  957  oc new-app --as-deployment-config --name info -i jairof-us-common/php-info --dry-run
+  958  oc new-app --as-deployment-config --name info -i jairof-us-common/php-info
+  959  oc get pods
+  960  oc expose svc info
+  961  oc get route
+  962  curl -si info-jairof-us-expose-image.apps.na45.prod.nextcle.com
+  963  oc get route
+  964  oc projects
+  965  oc delete jairof-us-common
+  966  oc delete project jairof-us-expose-image
+  967  oc delete project jairof-us-common
+  968  ls
+  969  git branch
+  970  git branches | grep manage-builds
+  971  git checktout master
+  972  git checkout master
+  973  git checkout -b manage-builds3
+  974  git push -u origin manage-builds3
+  975  ls
+  976  ls java-serverhost
+  977  cat java-serverhost/pom.xml
+  978  cat java-serverhost
+  979  tree java-serverhost
+  980  cat java-serverhost/src/main/java/com/redhat/training/example/javaserverhost/rest/RestApplication.java
+  981  cat java-serverhost/src/main/java/com/redhat/training/example/javaserverhost/rest/ServerHostEndPoint.java
+  982  oc new-project manage-builds
+  983  oc new-app search openjdk
+  984  oc new-app --search openjdk
+  985  oc new-app --search redhat-openjdk
+  986  oc new-app --search redhat-openjdk18
+  987  oc new-app --search redhat-openjdk18-openshift
+  988  podman search redhat-openjdk18-openshift
+  989  skopeo inspect redhat-openjdk18-openshift
+  990  skopeo inspect openjdk18-openshift
+  991  skopeo inspect redhat-openjdk-18/openjdk18-openshift
+  992  skopeo inspect registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+  993  skopeo inspect docker://registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+  994  skopeo inspect docker://registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5
+  995  oc new-app --as-deployment-config --name serverhost openjdk18-openshift:1.5~https://github.com/DO288-apps#manage-builds3 --context-dir java-serverhost --dry-run
+  996  oc new-app --as-deployment-config --name jhost --build-env MAVEN_MIRROR_URL http://${RHT_OCP4_NEXUS_SERVER}/repository/java -i redhat-openjdk18-openshift:1.5 https://github.com/DO288-apps#manage-builds3 --context-dir java-serverhost --dry-run
+  997  oc new-app --as-deployment-config --name jhost --build-env MAVEN_MIRROR_URL=http://${RHT_OCP4_NEXUS_SERVER}/repository/java -i redhat-openjdk18-openshift:1.5 https://github.com/DO288-apps#manage-builds3 --context-dir java-serverhost --dry-run
+  998  oc new-app --as-deployment-config --name jhost --build-env MAVEN_MIRROR_URL=http://${RHT_OCP4_NEXUS_SERVER}/repository/java -i redhat-openjdk18-openshift:1.5 https://github.com/jairof002/DO288-apps#manage-builds3 --context-dir java-serverhost --dry-run
+  999  oc new-app --as-deployment-config --name jhost --build-env MAVEN_MIRROR_URL http://${RHT_OCP4_NEXUS_SERVER}/repository/java -i redhat-openjdk18-openshift:1.5 https://github.com/jairof002/DO288-apps#manage-builds3 --context-dir java-serverhost --dry-run
+ 1000  ls
+ 1001  cd DO288-apps
+ 1002  ls
+ 1003  ls trigger-builds
+ 1004  source /usr/local/etc/ocp4.config
+ 1005  oc login -u jairof-us ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+ 1006  oc login -u jairof-us -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+ 1007  oc delete project manage-builds
+ 1008  oc new-project trigger-builds
+ 1009  podman login quay.io
+ 1010  lab trigger-builds start
+ 1011  oc projects
+ 1012  oc delete project trigger-builds
+ 1013  oc new-project jairof-us-trigger-builds
+ 1014  skopeo copy --help
+ 1015  skopeo copy docker-archive:/home/student/DO288/labs/trigger-builds/php-70-rhel7-original.tar.gz docker://quay.io/jairof002/php-70-rhel7:latest --help
+ 1016  skopeo copy docker-archive:/home/student/DO288/labs/trigger-builds/php-70-rhel7-original.tar.gz docker://quay.io/jairof002/php-70-rhel7:latest
+ 1017  oc create secret generic quayio --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type kubernetes.io/dockerconfigjson
+ 1018  oc policy link builder quayio
+ 1019  oc secrets link builder quayio
+ 1020  oc get secret
+ 1021  oc describe secret quayio
+ 1022  oc import-image php --from quay.io/jairof002/php-70-rhel7 --dry-run
+ 1023  oc import-image php --from quay.io/jairof002/php-70-rhel7 --confirm --reference-policy local --dry-run
+ 1024  oc import-image php --from quay.io/jairof002/php-70-rhel7 --confirm --dry-run
+ 1025  oc import-image php --from quay.io/jairof002/php-70-rhel7 --confirm
+ 1026  oc get is
+ 1027  oc new-app --as-deployment-config --name trigger -i php https://github.com/jairof002/DO288-apps --context-dir trigger-builds --dry-run
+ 1028  oc new-app --as-deployment-config --name trigger -i php https://github.com/jairof002/DO288-apps --context-dir trigger-builds
+ 1029  oc get pods
+ 1030  oc logs bc/trigger
+ 1031  oc logs bc/trigger -f
+ 1032  oc get pods
+ 1033  oc describe bc/trigger
+ 1034  oc describe bc/trigger| grep Triggered
+ 1035  oc get pods
+ 1036  skopeo copy docker-archive:/home/student/DO288/labs/trigger-builds/php-70-rhel7-newer.tar.gz docker://quay.io/jairof002/php-7--rhel7:latest
+ 1037  skopeo inspect docker://quay.io/jairof002/php-70-rhel7
+ 1038  skopeo inspect docker://quay.io/jairof002/php-70-rhel7:latest
+ 1039  oc get is
+ 1040  oc describe is php
+ 1041  oc import-image php
+ 1042  oc describe is 
+ 1043  oc describe is php
+ 1044  oc get pods
+ 1045  oc get builds
+ 1046  oc import-image php
+ 1047  oc get pods
+ 1048  oc get builds
+ 1049  oc get is
+ 1050  skopeo inspect php-70-rhel7
+ 1051  skopeo inspect quay.io://quay.io/jairof002/php-70-rhel7
+ 1052  skopeo inspect docker:quay.io://quay.io/jairof002/php-70-rhel7
+ 1053  skopeo inspect docker://quay.io/jairof002/php-70-rhel7
+ 1054  history 20 | grep skopeo
+ 1055  skopeo delete --help
+ 1056  histor 23 |grep skopeo
+ 1057  history 23 |grep skopeo
+ 1058  skopeo delete docker://quay.io/jairof002/php-7--rhel7:latest
+ 1059  skopeo inspect docker://quay.io/jairof002/php-7--rhel7:latest
+ 1060  skopeo copy docker-archive:/home/student/DO288/labs/trigger-builds/php-70-rhel7-newer.tar.gz docker://quay.io/jairof002/php-70-rhel7:latest
+ 1061  skopeo inspect docker://quay.io/jairof002/php-70-rhel7
+ 1062  skopeo inspect docker://quay.io/jairof002/php-70-rhel7:latest
+ 1063  oc import-image php
+ 1064  oc get pods
+ 1065  oc describe is php
+ 1066  oc get pods
+ 1067  oc get buidls
+ 1068  oc ge builds
+ 1069  oc get builds
+ 1070  oc get is
+ 1071  skopeo delete docker://quay.io/jairof002/php-70-rhel7
+ 1072  oc logs bc/trigger
+ 1073  oc set --help
+ 1074  git branches | grep post-commit
+ 1075  skopeo inpect docker://quay.io/redhattraining/builds-for-managers
+ 1076  skopeo inspect docker://quay.io/redhattraining/builds-for-managers
+ 1077  oc projects
+ 1078  oc delete project jairof-us-trigger-builds
+ 1079  oc new-project post-commit
+ 1080  oc delete project post-commit
+ 1081  oc new-project jairof-us-post-commit
+ 1082  oc new-app --as-deployment-config --name builds-for-managers --help
+ 1083  oc new-app --as-deployment-config --name builds-for-managers --docker-image://quay.io/redhattraining/builds-for-managers --dry-run
+ 1084  oc new-app --as-deployment-config --name builds-for-managers --docker-image quay.io/redhattraining/builds-for-managers --dry-run
+ 1085  oc new-app --as-deployment-config --name builds-for-managers --docker-image quay.io/redhattraining/builds-for-managers
+ 1086  oc get pods
+ 1087  oc status
+ 1088  oc expose svc builds-for-managers
+ 1089  oc get route
+ 1090  ls hook
+ 1091  oc new-app --as-deployment-config --name hook php:7.3~http://github.com/jairof002/DO288-apps --context-dir post-commit --dry-run
+ 1092  oc new-app --as-deployment-config --name hook php:7.3~http://github.com/jairof002/DO288-apps --context-dir post-commit
+ 1093  oc get pods
+ 1094  oc logs bc/hook -f
+ 1095  oc get pods
+ 1096  oc set build-hook --help
+ 1097  oc get route
+ 1098  oc set build-hook bc/hook --post-commit --command /bin/bash -c "curl -S -s -i -X POST builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUID_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'" --dry-run
+ 1099  oc set build-hook bc/hook --post-commit --command -- /bin/bash -c "curl -S -s -i -X POST builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUID_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'" --dry-run
+ 1100  oc get bc/hook | grep hook
+ 1101  oc get bc/hook | grep -A10 -B10 hook
+ 1102  oc describe bc/hook
+ 1103  echo $OPENSHIFT_BUILD_SOURCE
+ 1104  echo $DEVELOPER
+ 1105  echo $OPENSHIFT_BUILD_NAMESPACE
+ 1106  DEVELOPER=jairof
+ 1107  echo $DEVELOPER
+ 1108  OPENSHIFT_BUILD_SOURCE=${RHT_OCP4_WILDCARD_DOMAIN}
+ 1109  echo $OPENSHIFT_BUILD_SOURCE
+ 1110  OPENSHIFT_BUILD_NAMESPACE=jairof-us-builds-for-managers
+ 1111  echo $OPENSHIFT_BUILD_NAMESPACE
+ 1112  oc set build-hook bc/hook --post-commit --command -- /bin/bash -c "curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'" --dry-run
+ 1113  oc set build-hook bc/hook --post-commit --command -- /bin/bash -c "curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'"
+ 1114  oc get bc/hook
+ 1115  oc describe bc/hook
+ 1116  oc get pods
+ 1117  oc describe bc/hook | grep Post
+ 1118  oc start-build bc/hook
+ 1119  oc get pods
+ 1120  oc logs bc/hook-2
+ 1121  oc logs hook-2-build
+ 1122  history | oc set build-hook
+ 1123  history | grep "oc set build-hook"
+ 1124  curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'
+ 1125  oc describe bc/hook | grep hook
+ 1126  oc describe bc/hook | grep Post
+ 1127  history | grep curl
+ 1128  curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'
+ 1129  echo $RHT_OCP4_WILDCARD_DOMAIN
+ 1130  oc set build-hook bc/hook --post-commit --command -- /bin/bash -c "curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'"
+ 1131  oc describe bc/hook | grep Post
+ 1132  oc set build-hook bc/hook --post-commit --command -- bash -c "curl -S -s -i -X POST http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_BUILD_NAMESPACE}'"
+ 1133  oc describe bc/hook | grep Post
+ 1134  oc start-build bc/hook
+ 1135  oc get pods
+ 1136  oc logs bc/hoo -f
+ 1137  oc logs bc/hook -f
+ 1138  curl -si http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds
+ 1139  history | grep "oc new-app"
+ 1140  oc delete all -l app-hook
+ 1141  oc delete all -l app=hook
+ 1142  oc new-app --as-deployment-config --name hook php:7.0~https://github.com/jairof002/DO288-apps --context-dir post-commit
+ 1143  oc new-app --as-deployment-config --name hook php:7.3~https://github.com/jairof002/DO288-apps --context-dir post-commit
+ 1144  oc get pods
+ 1145  oc get pods -w
+ 1146  oc logs bc/hook
+ 1147  oc logs bc/hook -f
+ 1148  oc get pods
+ 1149  oc descrive bc/hook
+ 1150  oc describe bc/hook
+ 1151  oc set build-hook bc/hook --post-commit --command -- bash -c "curl -s -S -i http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_NAMESPACE}'" --dry-run
+ 1152  oc set build-hook bc/hook --post-commit --command -- bash -c "curl -s -S -i http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=\${DEVELOPER}&git=\${OPENSHIFT_BUILD_SOURCE}&project=\${OPENSHIFT_NAMESPACE}'"
+ 1153  oc describe bc/hook | grep Post
+ 1154  oc start-build bc/hook
+ 1155  oc logs bc/hook
+ 1156  oc logs bc/hook -f
+ 1157  curl http://builds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}
+ 1158  curl -si http://builds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}
+ 1159* curl -si http://builds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}   builds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}/api/builds
+ 1160  oc get route
+ 1161  curl -si http://builds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}/api/buildsbuilds-for-managers-jairof-us-post-commit.${RHT_OCP4_WILDCARD_DOMAIN}
+ 1162  oc get route
+ 1163  curl -si http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com
+ 1164  curl -si http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api
+ 1165  curl -si http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds
+ 1166  curl -si http://builds-for-managers-jairof-us-post-commit.apps.na45.prod.nextcle.com/api/builds -f -d 'developer=xx&git=yyy&project=zzz'
+ 1167  oc projects
+ 1168  oc delete project jairof-us-post-commit
+ 1169  ls build-app
+ 1170  oc projects
+ 1171  oc new-project jairof-us-build-app
+ 1172  oc new-app --as-deployment-config --name simple --build-env npm_config_registry=${RHT_OCP4_NEXUS_SERVER}/repository/nodejs https://github.com/jairof002/DO288-apps --context-dir build-app --dry-run
+ 1173  oc new-app --as-deployment-config --name simple --build-env npm_config_registry=${RHT_OCP4_NEXUS_SERVER}/repository2/nodejs https://github.com/jairof002/DO288-apps --context-dir build-app --dry-run
+ 1174  oc new-app --as-deployment-config --name simple --build-env npm_config_registry=${RHT_OCP4_NEXUS_SERVER}/repository2/nodejs https://github.com/jairof002/DO288-apps --context-dir build-app
+ 1175  oc status
+ 1176  oc get pods
+ 1177  oc logs bc/simple
+ 1178  oc logs bc/simple -f
+ 1179  oc get is
+ 1180  oc get pods
+ 1181  oc set build bc/simple --list
+ 1182  oc set build bc simple --list
+ 1183  oc set env bc/simple --list
+ 1184  oc set env dc/simple --list
+ 1185  oc set env --help
+ 1186  oc set env bc/simple npm_config_registry=${RHT_OCP4_NEXUS_SERVER}/repository/nodejs
+ 1187  oc set env bc/simple --list
+ 1188  oc get pods
+ 1189  oc start-build bc/simple -F
+ 1190  oc set env bc/simple --list
+ 1191  oc set env bc/simple npm_config_registry=http://
+ 1192  oc set env bc/simple npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs
+ 1193  oc set env bc/simple --list
+ 1194  oc edit bc/simple -o json
+ 1195  oc edit bc/simple -o yaml
+ 1196  oc start-build bc/simple
+ 1197  oc logs bc/simple -F
+ 1198  oc logs bc/simple -f
+ 1199  oc get pods
+ 1200  oc logs bc/simple
+ 1201  oc get is
+ 1202  oc describe bc/simple
+ 1203  oc create secret --help
+ 1204  oc secrets --help
+ 1205  oc secrets generic --help
+ 1206  oc secret generic --help
+ 1207  oc new-secret --help
+ 1208  oc --help
+ 1209  oc create --help
+ 1210  oc create secret generic --help
+ 1211  oc describe bc/simple
+ 1212  oc get bc/simple -o json
+ 1213  oc get bc/simple -o jsonpath={.spec.triggers[].generic.secret}
+ 1214  oc get bc/simple -o jsonpath={.spec.triggers[*].generic.secret}
+ 1215  oc get bc/simple -o jsonpath='{.spec.triggers[*].generic.secret}{"\n"}'
+ 1216  oc describe bc/simple |greb webhook
+ 1217  oc describe bc/simple |grep webhook
+ 1218  curl -k -X POST https://api.na45.prod.nextcle.com:6443/apis/build.openshift.io/v1/namespaces/jairof-us-build-app/buildconfigs/simple/webhooks/znjb4Efcrv03_Ya_KZ8F/generic
+ 1219  oc get pods
+ 1220  history 3
+ 1221  oc describe bc/simple | grep -A5 -B5 webhook
+ 1222  oc describe bc/simple | grep Webhook
+ 1223  oc describe bc/simple | grep -A2 Webhook
+ 1224  grep -h
+ 1225  grep --help
+ 1226  oc describe bc/simple | grep -i webhook
+ 1227  oc get bc/simple -o jsonpath='{.spec.trigger[*].secret.generic}{"\n"}'
+ 1228  oc get bc/simple -o jsonpath='{.spec.triggers[*].secret.generic}{"\n"}'
+ 1229  history 10 | grep secret
+ 1230  history 30 | grep secret
+ 1231  oc describe bc/simple | grep -i webhook
+ 1232  oc get bc/simple -o jsonpath='{.spec.triggers[*].secret.generic}{"\n"}'
+ 1233  oc get bc/simple -o jsonpath='{.spec.triggers[*].generic.secret}{"\n"}'
+ 1234  history 10 | grep curl
+ 1235  history 20 | grep curl
+ 1236  oc describe dc/simple |grep -i webhook
+ 1237  oc describe dc/simple |grep -i trigger
+ 1238  oc set --help
+ 1239  oc get build-hook bc/simple
+ 1240  oc get triggers bc/simple
+ 1241  oc create --help
+ 1242  history 10
+ 1243  oc set --help
+ 1244  history 200
+ 1245  history > h.txt
