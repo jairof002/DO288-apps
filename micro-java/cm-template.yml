@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  VAR: This is my value
+kind: ConfigMap
+metadata:
+  name: cm-name
+  namespace: jairof-us-micro-java
